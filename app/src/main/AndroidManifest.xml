@@ -3,6 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <application
+        android:name=".ShoppingApplication"
+        android:usesCleartextTraffic="true"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -13,7 +15,10 @@
         android:theme="@style/Theme.ShoppingKT"
         tools:targetApi="31">
         <activity
-            android:name=".MainActivity"
+            android:name=".activities.ShoppingActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.AuthActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
