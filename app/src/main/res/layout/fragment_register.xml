@@ -28,7 +28,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/txtLogin"
+            android:id="@+id/txtRegister"
             style="@style/h4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -37,13 +37,13 @@
             app:layout_constraintTop_toBottomOf="@id/txtAppName" />
 
         <TextView
-            android:id="@+id/txtRegister"
+            android:id="@+id/txtLogin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
             android:text="등록된 계정이 있으신가요?"
             app:layout_constraintStart_toStartOf="@+id/guidelineStart"
-            app:layout_constraintTop_toBottomOf="@id/txtLogin" />
+            app:layout_constraintTop_toBottomOf="@id/txtRegister" />
 
         <androidx.appcompat.widget.AppCompatEditText
             android:id="@+id/editName"
@@ -55,7 +55,7 @@
             android:inputType="text"
             app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
             app:layout_constraintStart_toStartOf="@+id/guidelineStart"
-            app:layout_constraintTop_toBottomOf="@id/txtRegister" />
+            app:layout_constraintTop_toBottomOf="@id/txtLogin" />
 
         <androidx.appcompat.widget.AppCompatEditText
             android:id="@+id/editEmail"

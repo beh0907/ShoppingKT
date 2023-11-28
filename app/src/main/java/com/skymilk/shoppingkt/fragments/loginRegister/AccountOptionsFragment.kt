@@ -5,6 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
+import com.skymilk.shoppingkt.R
 import com.skymilk.shoppingkt.databinding.FragmentAccountOptionsBinding
 import com.skymilk.shoppingkt.databinding.FragmentIntroductionBinding
 
@@ -25,6 +27,20 @@ class AccountOptionsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        setClick()
+    }
+
+    private fun setClick() {
+        binding.apply {
+            btnLogin.setOnClickListener{
+                findNavController().navigate(R.id.loginFragment)
+            }
+
+            btnRegister.setOnClickListener{
+                findNavController().navigate(R.id.registerFragment)
+            }
+        }
     }
 
 }

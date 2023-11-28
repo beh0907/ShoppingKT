@@ -5,6 +5,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.NavController
+import androidx.navigation.fragment.findNavController
+import com.skymilk.shoppingkt.R
 import com.skymilk.shoppingkt.databinding.FragmentIntroductionBinding
 
 class IntroductionFragment : Fragment() {
@@ -25,8 +28,14 @@ class IntroductionFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.btnStart.setOnClickListener{
+        setClick()
+    }
 
+    private fun setClick() {
+        binding.apply {
+            btnStart.setOnClickListener{
+                findNavController().navigate(R.id.accountOptionsFragment)
+            }
         }
     }
 

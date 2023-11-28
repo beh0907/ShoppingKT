@@ -87,6 +87,7 @@ dependencies {
 
     //파이어베이스
     implementation 'com.google.firebase:firebase-auth:22.3.0'
+    implementation 'com.google.firebase:firebase-firestore:24.9.1'
 }
 
 kapt {
