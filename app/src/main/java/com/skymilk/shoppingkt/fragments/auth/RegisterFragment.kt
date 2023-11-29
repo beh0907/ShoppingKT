@@ -1,4 +1,4 @@
-package com.skymilk.shoppingkt.fragments.loginRegister
+package com.skymilk.shoppingkt.fragments.auth
 
 import android.os.Bundle
 import android.util.Log
@@ -61,7 +61,7 @@ class RegisterFragment : Fragment() {
 
 
             txtLogin.setOnClickListener {
-                findNavController().navigate(R.id.loginFragment)
+                findNavController().navigate(R.id.action_registerFragment_to_loginFragment)
             }
         }
     }

@@ -1,4 +1,4 @@
-package com.skymilk.shoppingkt.fragments.loginRegister
+package com.skymilk.shoppingkt.fragments.auth
 
 import android.content.Intent
 import android.os.Bundle
@@ -56,7 +56,7 @@ class LoginFragment : Fragment() {
 
             //회원가입 화면 이동
             txtRegister.setOnClickListener {
-                findNavController().navigate(R.id.registerFragment)
+                findNavController().navigate(R.id.action_loginFragment_to_registerFragment)
             }
 
             //비밀번호 초기화

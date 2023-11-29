@@ -1,4 +1,4 @@
-package com.skymilk.shoppingkt.fragments.loginRegister
+package com.skymilk.shoppingkt.fragments.auth
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,7 +8,6 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.skymilk.shoppingkt.R
 import com.skymilk.shoppingkt.databinding.FragmentAccountOptionsBinding
-import com.skymilk.shoppingkt.databinding.FragmentIntroductionBinding
 
 class AccountOptionsFragment : Fragment() {
     private lateinit var binding: FragmentAccountOptionsBinding
@@ -34,11 +33,11 @@ class AccountOptionsFragment : Fragment() {
     private fun setClick() {
         binding.apply {
             btnLogin.setOnClickListener{
-                findNavController().navigate(R.id.loginFragment)
+                findNavController().navigate(R.id.action_accountOptionsFragment_to_loginFragment)
             }
 
             btnRegister.setOnClickListener{
-                findNavController().navigate(R.id.registerFragment)
+                findNavController().navigate(R.id.action_accountOptionsFragment_to_registerFragment)
             }
         }
     }

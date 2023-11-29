@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/introductionFragment"
-        android:name="com.skymilk.shoppingkt.fragments.loginRegister.IntroductionFragment"
+        android:name="com.skymilk.shoppingkt.fragments.auth.IntroductionFragment"
         android:label="IntroductionFragment"
         tools:layout="@layout/fragment_introduction">
          <action
@@ -17,7 +17,7 @@
     </fragment>
     <fragment
         android:id="@+id/loginFragment"
-        android:name="com.skymilk.shoppingkt.fragments.loginRegister.LoginFragment"
+        android:name="com.skymilk.shoppingkt.fragments.auth.LoginFragment"
         android:label="LoginFragment"
         tools:layout="@layout/fragment_login">
         <action
@@ -28,7 +28,7 @@
     </fragment>
     <fragment
         android:id="@+id/registerFragment"
-        android:name="com.skymilk.shoppingkt.fragments.loginRegister.RegisterFragment"
+        android:name="com.skymilk.shoppingkt.fragments.auth.RegisterFragment"
         android:label="RegisterFragment"
         tools:layout="@layout/fragment_register">
         <action
@@ -39,7 +39,7 @@
     </fragment>
     <fragment
         android:id="@+id/accountOptionsFragment"
-        android:name="com.skymilk.shoppingkt.fragments.loginRegister.AccountOptionsFragment"
+        android:name="com.skymilk.shoppingkt.fragments.auth.AccountOptionsFragment"
         android:label="AccountOptionsFragment" tools:layout="@layout/fragment_account_options">
         <action
             android:id="@+id/action_accountOptionsFragment_to_loginFragment"
