@@ -1,11 +1,17 @@
 package com.skymilk.shoppingkt.fragments.auth
 
+import android.app.Application
 import android.content.Intent
+import android.graphics.Rect
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
+import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
+import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -15,6 +21,7 @@ import com.skymilk.shoppingkt.R
 import com.skymilk.shoppingkt.activities.ShoppingActivity
 import com.skymilk.shoppingkt.databinding.FragmentLoginBinding
 import com.skymilk.shoppingkt.dialogs.setUpBottomSheetDialog
+import com.skymilk.shoppingkt.utils.KeyboardUtil
 import com.skymilk.shoppingkt.utils.Resource
 import com.skymilk.shoppingkt.viewmodels.LoginViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -64,6 +71,17 @@ class LoginFragment : Fragment() {
                 setUpBottomSheetDialog {
                     viewModel.resetPassword(it)
                 }
+            }
+
+            //비밀번호 입력 후 완료할 때 로그인 수행
+            editPassword.setOnEditorActionListener { _, id, _ ->
+                var handled = false
+                if (id == EditorInfo.IME_ACTION_DONE) {
+                    binding.btnLogin.performClick() // 로그인 버튼 클릭
+                    KeyboardUtil.hideKeyboard(requireActivity()) // 키보드 숨기기
+                    handled = true
+                }
+                handled
             }
         }
     }

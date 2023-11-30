@@ -5,6 +5,7 @@
     android:layout_height="match_parent">
 
     <androidx.core.widget.NestedScrollView
+        android:id="@+id/scrollViewMain"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fillViewport="true">
@@ -14,17 +15,18 @@
             android:layout_height="match_parent">
 
             <ProgressBar
+                android:id="@+id/progressBarMain"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:indeterminateTint="@color/g_gray700"
-                android:visibility="visible"
+                android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerSpecial"
+                android:id="@+id/recycler_special_products"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="15dp"
@@ -44,7 +46,7 @@
                 android:textSize="22sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/recyclerSpecial" />
+                app:layout_constraintTop_toBottomOf="@id/recycler_special_products" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerBestDeals"
@@ -52,7 +54,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="@+id/recyclerSpecial"
+                app:layout_constraintStart_toStartOf="@+id/recycler_special_products"
                 app:layout_constraintTop_toBottomOf="@id/txtBestDeals" />
 
             <TextView
@@ -64,7 +66,7 @@
                 android:text="Best Products"
                 android:textColor="@color/black"
                 android:textSize="22sp"
-                app:layout_constraintStart_toStartOf="@+id/recyclerSpecial"
+                app:layout_constraintStart_toStartOf="@+id/recycler_special_products"
                 app:layout_constraintTop_toBottomOf="@id/recyclerBestDeals" />
 
             <androidx.recyclerview.widget.RecyclerView
@@ -77,6 +79,16 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/txtBestProducts" />
 
+            <ProgressBar
+                android:id="@+id/progressBarBestProducts"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:indeterminateTint="@color/g_gray700"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/g_card_background"
     app:elevation="0dp"
@@ -13,7 +13,7 @@
         android:layout_height="match_parent">
 
         <ImageView
-            android:id="@+id/img_product"
+            android:id="@+id/imgProduct"
             android:layout_width="114dp"
             android:layout_height="108dp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -22,17 +22,17 @@
             android:scaleType="fitCenter"/>
 
         <LinearLayout
-            android:id="@+id/linear_product_name"
+            android:id="@+id/layoutProductName"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:orientation="horizontal"
-            app:layout_constraintStart_toStartOf="@id/img_product"
-            app:layout_constraintTop_toBottomOf="@id/img_product"
-            app:layout_constraintEnd_toEndOf="@id/img_product">
+            app:layout_constraintStart_toStartOf="@id/imgProduct"
+            app:layout_constraintTop_toBottomOf="@id/imgProduct"
+            app:layout_constraintEnd_toEndOf="@id/imgProduct">
 
             <TextView
-                android:id="@+id/tv_name"
+                android:id="@+id/txtName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/poppins_light"
@@ -43,7 +43,7 @@
                 android:layout_weight="1"/>
 
             <ImageView
-                android:id="@+id/img_favorite"
+                android:id="@+id/imgFavorite"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
@@ -53,9 +53,8 @@
                 app:tint="@color/g_blue_gray200" />
         </LinearLayout>
 
-
         <TextView
-            android:id="@+id/tv_new_price"
+            android:id="@+id/txtOldPrice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="3dp"
@@ -65,12 +64,12 @@
             android:textColor="@color/black"
             android:textSize="12sp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@id/tv_price"
-            app:layout_constraintTop_toBottomOf="@id/linear_product_name"
-            android:layout_marginStart="10dp"/>
+            app:layout_constraintStart_toStartOf="@id/imgProduct"
+            app:layout_constraintTop_toBottomOf="@id/layoutProductName" />
+
 
         <TextView
-            android:id="@+id/tv_price"
+            android:id="@+id/txtNewPrice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="3dp"
@@ -80,8 +79,10 @@
             android:textColor="@color/black"
             android:textSize="12sp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="@id/img_product"
-            app:layout_constraintTop_toBottomOf="@id/linear_product_name" />
+            app:layout_constraintStart_toEndOf="@id/txtOldPrice"
+            app:layout_constraintTop_toBottomOf="@id/layoutProductName"
+            android:layout_marginStart="10dp"
+            android:visibility="gone"/>
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

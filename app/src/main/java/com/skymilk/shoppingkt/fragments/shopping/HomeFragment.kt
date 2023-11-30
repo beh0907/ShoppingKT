@@ -46,6 +46,9 @@ class HomeFragment : Fragment() {
             FurnitureFragment(),
         )
 
+        //슬라이드 뷰페이저 탭 이동을 막는다
+        binding.viewPagerHome.isUserInputEnabled = false
+
         val viewPagerAdapter = HomeViewPagerAdapter(categoryFragments, childFragmentManager, lifecycle)
         binding.viewPagerHome.adapter = viewPagerAdapter
         TabLayoutMediator(binding.tabLayout, binding.viewPagerHome) { tab, position ->
