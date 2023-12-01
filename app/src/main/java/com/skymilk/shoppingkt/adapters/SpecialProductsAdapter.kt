@@ -23,6 +23,7 @@ class SpecialProductsAdapter :
         }
     }
     val differ = AsyncListDiffer(this, diffCallback)
+    var onItemClick : ((Product) -> Unit)? = null
     val decimal = DecimalFormat("#,###")
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SpecialProductsViewHolder {
@@ -49,14 +50,14 @@ class SpecialProductsAdapter :
         RecyclerView.ViewHolder(binding.root) {
 
         init {
-            binding.btnAddCart.setOnClickListener {
-
+            itemView.setOnClickListener {
+                onItemClick?.invoke(differ.currentList[adapterPosition])
             }
         }
 
         fun bind(product: Product) {
             binding.apply {
-                txtName.text = "$ ${product.name}"
+                txtName.text = product.name
                 txtPrice.text = "${decimal.format(product.price)} 원"
 
                 Glide.with(itemView).load(product.images[0]).into(imgProduct)

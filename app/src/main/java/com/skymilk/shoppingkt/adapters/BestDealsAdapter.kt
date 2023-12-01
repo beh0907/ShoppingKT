@@ -4,6 +4,7 @@ import android.graphics.Paint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.Dimension
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -25,6 +26,7 @@ class BestDealsAdapter :
         }
     }
     val differ = AsyncListDiffer(this, diffCallback)
+    var onItemClick : ((Product) -> Unit)? = null
     val decimal = DecimalFormat("#,###")
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BestDealsViewHolder {
@@ -51,8 +53,8 @@ class BestDealsAdapter :
         RecyclerView.ViewHolder(binding.root) {
 
         init {
-            binding.btnDetail.setOnClickListener {
-
+            itemView.setOnClickListener {
+                onItemClick?.invoke(differ.currentList[adapterPosition])
             }
         }
 
@@ -68,6 +70,7 @@ class BestDealsAdapter :
 
                     //기존 가격에 취소선을 추가하고 새 가격을 표시한다
                     txtOldPrice.paintFlags = txtOldPrice.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
+                    txtOldPrice.setTextSize(Dimension.SP, 10f)
                     txtNewPrice.visibility = View.VISIBLE
                 }
 

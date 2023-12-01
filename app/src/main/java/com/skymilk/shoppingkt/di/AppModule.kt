@@ -4,6 +4,7 @@ import android.app.Application
 import android.content.Context.MODE_PRIVATE
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.skymilk.shoppingkt.firebase.FirebaseCommon
 import com.skymilk.shoppingkt.utils.Constants
 import dagger.Module
 import dagger.Provides
@@ -28,4 +29,11 @@ object AppModule {
     fun provideIntroductionSharedPreferences(
         application: Application
     ) = application.getSharedPreferences(Constants.INTRODUCTION_SHARED_PREFERENCES, MODE_PRIVATE)
+
+    @Provides
+    @Singleton
+    fun provideFirebaseCommon(
+        fireStore: FirebaseFirestore,
+        firebaseAuth: FirebaseAuth
+    ) = FirebaseCommon(fireStore, firebaseAuth)
 }

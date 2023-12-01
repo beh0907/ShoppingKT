@@ -8,9 +8,11 @@ import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
+import com.skymilk.shoppingkt.R
 import com.skymilk.shoppingkt.adapters.BestDealsAdapter
 import com.skymilk.shoppingkt.adapters.BestProductsAdapter
 import com.skymilk.shoppingkt.adapters.SpecialProductsAdapter
@@ -50,6 +52,11 @@ class MainCategoryFragment : Fragment() {
     }
 
     private fun initSpecialProductsRecyclerView() {
+        specialProductsAdapter.onItemClick = {
+            val bundle = Bundle().apply { putParcelable("product", it) }
+            findNavController().navigate(R.id.action_homeFragment_to_productDetailsFragment, bundle)
+        }
+
         binding.recyclerSpecialProducts.apply {
             layoutManager =
                 LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
@@ -58,6 +65,11 @@ class MainCategoryFragment : Fragment() {
     }
 
     private fun initBestDealsRecyclerView() {
+        bestDealsAdapter.onItemClick = {
+            val bundle = Bundle().apply { putParcelable("product", it) }
+            findNavController().navigate(R.id.action_homeFragment_to_productDetailsFragment, bundle)
+        }
+
         binding.recyclerBestDeals.apply {
             layoutManager =
                 LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
@@ -66,6 +78,11 @@ class MainCategoryFragment : Fragment() {
     }
 
     private fun initBestProductsRecyclerView() {
+        bestProductsAdapter.onItemClick = {
+            val bundle = Bundle().apply { putParcelable("product", it) }
+            findNavController().navigate(R.id.action_homeFragment_to_productDetailsFragment, bundle)
+        }
+
         binding.recyclerBestProducts.apply {
             layoutManager =
                 GridLayoutManager(requireContext(), 2, GridLayoutManager.VERTICAL, false)

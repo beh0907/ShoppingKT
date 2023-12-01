@@ -25,6 +25,7 @@ class BestProductsAdapter :
         }
     }
     val differ = AsyncListDiffer(this, diffCallback)
+    var onItemClick : ((Product) -> Unit)? = null
     val decimal = DecimalFormat("#,###")
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BestProductsViewHolder {
@@ -51,8 +52,8 @@ class BestProductsAdapter :
         RecyclerView.ViewHolder(binding.root) {
 
         init {
-            binding.imgFavorite.setOnClickListener {
-
+            itemView.setOnClickListener {
+                onItemClick?.invoke(differ.currentList[adapterPosition])
             }
         }
 

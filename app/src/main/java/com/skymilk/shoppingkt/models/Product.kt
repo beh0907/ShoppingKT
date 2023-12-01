@@ -1,6 +1,10 @@
 package com.skymilk.shoppingkt.models
 
-data class Product(
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+
+@Parcelize
+data class Product (
     val id: String,
     val name: String,
     val category: String,
@@ -10,7 +14,7 @@ data class Product(
     val colors: List<Int>? = null,
     val sizes: List<String>? = null,
     val images: List<String>
-) {
+) : Parcelable {
     //null 비허용 변수의 기본값을 설정해줘야 한다
     constructor() : this("0", "", "", 0, images = emptyList())
 }

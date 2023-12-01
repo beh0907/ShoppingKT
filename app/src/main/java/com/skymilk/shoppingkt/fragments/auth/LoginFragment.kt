@@ -21,8 +21,8 @@ import com.skymilk.shoppingkt.R
 import com.skymilk.shoppingkt.activities.ShoppingActivity
 import com.skymilk.shoppingkt.databinding.FragmentLoginBinding
 import com.skymilk.shoppingkt.dialogs.setUpBottomSheetDialog
-import com.skymilk.shoppingkt.utils.KeyboardUtil
 import com.skymilk.shoppingkt.utils.Resource
+import com.skymilk.shoppingkt.utils.hideKeyboard
 import com.skymilk.shoppingkt.viewmodels.LoginViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -78,7 +78,7 @@ class LoginFragment : Fragment() {
                 var handled = false
                 if (id == EditorInfo.IME_ACTION_DONE) {
                     binding.btnLogin.performClick() // 로그인 버튼 클릭
-                    KeyboardUtil.hideKeyboard(requireActivity()) // 키보드 숨기기
+                    hideKeyboard(requireActivity()) // 키보드 숨기기
                     handled = true
                 }
                 handled

@@ -6,12 +6,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.skymilk.shoppingkt.R
 import com.skymilk.shoppingkt.adapters.BestProductsAdapter
 import com.skymilk.shoppingkt.databinding.FragmentBaseCategoryBinding
+import com.skymilk.shoppingkt.utils.showBottomNavigation
 
 open class BaseCategoryFragment : Fragment(R.layout.fragment_base_category) {
     private lateinit var binding: FragmentBaseCategoryBinding
@@ -23,8 +25,16 @@ open class BaseCategoryFragment : Fragment(R.layout.fragment_base_category) {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        showBottomNavigation(requireActivity())
         binding = FragmentBaseCategoryBinding.inflate(inflater)
         return binding.root
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        //숨긴 하단 탭을 다시 표시한다
+        showBottomNavigation(requireActivity())
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -61,6 +71,11 @@ open class BaseCategoryFragment : Fragment(R.layout.fragment_base_category) {
     }
 
     private fun initOffersRecyclerView() {
+        offersAdapter.onItemClick = {
+            val bundle = Bundle().apply { putParcelable("product", it) }
+            findNavController().navigate(R.id.action_homeFragment_to_productDetailsFragment, bundle)
+        }
+
         binding.recyclerOffer.apply {
             layoutManager =
                 LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
@@ -83,6 +98,11 @@ open class BaseCategoryFragment : Fragment(R.layout.fragment_base_category) {
     }
 
     private fun initBestProductsRecyclerView() {
+        bestProductsAdapter.onItemClick = {
+            val bundle = Bundle().apply { putParcelable("product", it) }
+            findNavController().navigate(R.id.action_homeFragment_to_productDetailsFragment, bundle)
+        }
+
         binding.recyclerBestProducts.apply {
             layoutManager =
                 GridLayoutManager(requireContext(), 2, GridLayoutManager.VERTICAL, false)

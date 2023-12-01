@@ -2,4 +2,6 @@
     <string name="app_name">ShoppingKT</string>
     <string name="txtIntroductionTitle">자유롭게 쇼핑하기\n좋은 장소가 여기에\n있습니다.</string>
     <string name="txtIntroductionSub">인터넷의 모든 제품 중\n최고 품질을 손쉽게\n찾을 수 있습니다!</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
