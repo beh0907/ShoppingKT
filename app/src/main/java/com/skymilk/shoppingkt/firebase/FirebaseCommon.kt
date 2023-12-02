@@ -11,6 +11,7 @@ class FirebaseCommon(
     private val cartCollection =
         fireStore.collection("user").document(auth.uid!!).collection("cart")
 
+    //카트에 상품 추가
     fun addProductCart(cartProduct: CartProduct, onResult: (CartProduct?, Exception?) -> Unit) {
         cartCollection.document().set(cartProduct)
             .addOnSuccessListener {
@@ -20,6 +21,7 @@ class FirebaseCommon(
             }
     }
 
+    //수량 증가
     fun increaseQuantity(documentId: String, onResult: (String?, Exception?) -> Unit) {
         fireStore.runTransaction { transition ->
             val documentRef = cartCollection.document(documentId)
@@ -36,6 +38,28 @@ class FirebaseCommon(
         }.addOnFailureListener {
             onResult(null, it)
         }
+    }
 
+    //수량 감소
+    fun decreaseQuantity(documentId: String, onResult: (String?, Exception?) -> Unit) {
+        fireStore.runTransaction { transition ->
+            val documentRef = cartCollection.document(documentId)
+            val document = transition.get(documentRef)
+            val productObject = document.toObject(CartProduct::class.java)
+
+            productObject?.let { cartProduct ->
+                val newQuantity = cartProduct.quantity - 1
+                val newProductObject = cartProduct.copy(quantity = newQuantity)
+                transition.set(documentRef, newProductObject)
+            }
+        }.addOnSuccessListener {
+            onResult(documentId, null)
+        }.addOnFailureListener {
+            onResult(null, it)
+        }
+    }
+
+    enum class QuantityChangeState {
+        INCREASE, DECREASE
     }
 }

@@ -91,7 +91,7 @@ class RegisterFragment : Fragment() {
         }
 
         //회원가입 시 검증 상태 정보 처리
-        lifecycleScope.launchWhenStarted {
+        lifecycleScope.launch {
             viewModel.validation.collect {
                 if (it.email is RegisterValidation.Failed) {
                     //Main = UI 상호작용을 위한 메인 스레드

@@ -81,11 +81,11 @@
             app:layout_constraintBottom_toTopOf="@id/guidelineBottom"
             app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
             app:layout_constraintStart_toStartOf="@id/guidelineStart"
-            app:layout_constraintTop_toBottomOf="@id/progressCart"
+            app:layout_constraintTop_toBottomOf="@id/progressBar"
             tools:listitem="@layout/item_cart_product" />
 
         <com.google.android.material.progressindicator.LinearProgressIndicator
-            android:id="@+id/progressCart"
+            android:id="@+id/progressBar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:indeterminate="true"
@@ -102,7 +102,8 @@
             android:background="@drawable/total_box_background"
             app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
             app:layout_constraintStart_toStartOf="@id/guidelineStart"
-            app:layout_constraintTop_toBottomOf="@id/guidelineBottom">
+            app:layout_constraintTop_toBottomOf="@id/guidelineBottom"
+            app:layout_constraintBottom_toTopOf="@+id/btnCheckOut">
 
             <TextView
                 android:layout_width="0dp"
@@ -121,9 +122,10 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="15dp"
-                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
                 android:fontFamily="@font/sf_pro_display"
                 android:text="1,548,100 원"
+                android:textAlignment="textEnd"
                 android:textColor="@color/black"
                 android:textSize="16sp"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -143,7 +145,6 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/layoutTotalPrice"
             app:layout_constraintStart_toStartOf="@+id/layoutTotalPrice"
-            app:layout_constraintTop_toBottomOf="@+id/layoutTotalPrice"
             app:spinning_bar_color="@color/white" />
 
         <androidx.constraintlayout.widget.ConstraintLayout

@@ -17,6 +17,10 @@
         <activity
             android:name=".activities.ShoppingActivity"
             android:exported="true"
+            android:windowSoftInputMode="stateAlwaysHidden" />
+        <activity
+            android:name=".activities.AuthActivity"
+            android:exported="true"
             android:windowSoftInputMode="stateAlwaysHidden">
 
             <intent-filter>
@@ -24,11 +28,6 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-        <activity
-            android:name=".activities.AuthActivity"
-            android:exported="true"
-            android:windowSoftInputMode="stateAlwaysHidden">
         </activity>
     </application>
 

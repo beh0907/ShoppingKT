@@ -7,6 +7,8 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.skymilk.shoppingkt.databinding.ItemSpecialBinding
+import com.skymilk.shoppingkt.helper.decimal
+import com.skymilk.shoppingkt.helper.toCommaString
 import com.skymilk.shoppingkt.models.Product
 import java.text.DecimalFormat
 
@@ -24,7 +26,6 @@ class SpecialProductsAdapter :
     }
     val differ = AsyncListDiffer(this, diffCallback)
     var onItemClick : ((Product) -> Unit)? = null
-    val decimal = DecimalFormat("#,###")
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SpecialProductsViewHolder {
         return SpecialProductsViewHolder(
@@ -58,7 +59,7 @@ class SpecialProductsAdapter :
         fun bind(product: Product) {
             binding.apply {
                 txtName.text = product.name
-                txtPrice.text = "${decimal.format(product.price)} 원"
+                txtPrice.text = "${product.price.toCommaString()} 원"
 
                 Glide.with(itemView).load(product.images[0]).into(imgProduct)
             }

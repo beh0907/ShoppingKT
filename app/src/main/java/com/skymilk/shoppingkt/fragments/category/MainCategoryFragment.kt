@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -114,10 +115,8 @@ class MainCategoryFragment : Fragment() {
                     }
 
                     is Resource.Error -> {
-                        Snackbar.make(requireView(), it.message.toString(), Snackbar.LENGTH_SHORT)
-                            .show()
-
                         hideLoading()
+                        Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
                     }
 
                     else -> Unit
@@ -164,9 +163,8 @@ class MainCategoryFragment : Fragment() {
                     }
 
                     is Resource.Error -> {
-                        Snackbar.make(requireView(), it.message.toString(), Snackbar.LENGTH_SHORT)
-                            .show()
                         binding.progressBarBestProducts.visibility = View.GONE
+                        Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
                     }
 
                     else -> Unit

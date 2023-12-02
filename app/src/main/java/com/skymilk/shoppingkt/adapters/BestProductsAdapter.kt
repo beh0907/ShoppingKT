@@ -4,11 +4,14 @@ import android.graphics.Paint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.Dimension
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.skymilk.shoppingkt.databinding.ItemBestProductBinding
+import com.skymilk.shoppingkt.helper.getOfferPrice
+import com.skymilk.shoppingkt.helper.toCommaString
 import com.skymilk.shoppingkt.models.Product
 import java.text.DecimalFormat
 
@@ -25,8 +28,7 @@ class BestProductsAdapter :
         }
     }
     val differ = AsyncListDiffer(this, diffCallback)
-    var onItemClick : ((Product) -> Unit)? = null
-    val decimal = DecimalFormat("#,###")
+    var onItemClick: ((Product) -> Unit)? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BestProductsViewHolder {
         return BestProductsViewHolder(
@@ -60,16 +62,17 @@ class BestProductsAdapter :
         fun bind(product: Product) {
             binding.apply {
                 txtName.text = product.name
-                txtOldPrice.text = "${decimal.format(product.price)} 원"
+                txtOldPrice.text = "${product.price.toCommaString()} 원"
 
 
                 //할인 정보가 있을 경우 반영하여 추가한다
                 product.offerPercentage?.let {
-                    val offerPrice = product.price * (1f - (it / 100f))
-                    txtNewPrice.text = "${decimal.format(product.price)} 원"
+                    val offerPrice = it.getOfferPrice(product.price)
+                    txtNewPrice.text = "${offerPrice.toCommaString()} 원"
 
                     //기존 가격에 취소선을 추가하고 새 가격을 표시한다
                     txtOldPrice.paintFlags = txtOldPrice.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
+                    txtOldPrice.setTextSize(Dimension.SP, 10f)
                     txtNewPrice.visibility = View.VISIBLE
                 }
 

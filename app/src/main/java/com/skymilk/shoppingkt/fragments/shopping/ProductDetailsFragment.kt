@@ -16,6 +16,7 @@ import com.skymilk.shoppingkt.adapters.ColorsAdapter
 import com.skymilk.shoppingkt.adapters.ImagesViewPagerAdapter
 import com.skymilk.shoppingkt.adapters.SizesAdapter
 import com.skymilk.shoppingkt.databinding.FragmentProductDetailsBinding
+import com.skymilk.shoppingkt.helper.toCommaString
 import com.skymilk.shoppingkt.models.CartProduct
 import com.skymilk.shoppingkt.models.Product
 import com.skymilk.shoppingkt.utils.Resource
@@ -24,7 +25,6 @@ import com.skymilk.shoppingkt.utils.showBottomNavigation
 import com.skymilk.shoppingkt.viewmodels.ProductDetailsViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
-import java.text.DecimalFormat
 
 @AndroidEntryPoint
 class ProductDetailsFragment : Fragment() {
@@ -40,8 +40,6 @@ class ProductDetailsFragment : Fragment() {
     private lateinit var currentProduct: Product
     private var selectedColor: Int? = null
     private var selectedSize: String? = null
-
-    val decimal = DecimalFormat("#,###")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -83,7 +81,7 @@ class ProductDetailsFragment : Fragment() {
         binding.apply {
             txtProductName.text = currentProduct.name
             txtProductDescription.text = currentProduct.description
-            txtProductPrice.text = "${decimal.format(currentProduct.price)} 원"
+            txtProductPrice.text = "${currentProduct.price.toCommaString()} 원"
 
             //값이 없다면 헤더 텍스트도 숨긴다
             if (currentProduct.colors.isNullOrEmpty()) txtColor.visibility = View.INVISIBLE
@@ -91,7 +89,7 @@ class ProductDetailsFragment : Fragment() {
 
 //            product.offerPercentage?.let {
 //                txtOldPrice.text = "${decimal.format(product.price)} 원"
-//                val offerPrice = product.price * (1f - (it / 100f))
+//                val offerPrice = getOfferPrice(product.price, it)
 //                txtNewPrice.text = "${decimal.format(product.price)} 원"
 //            }
         }
@@ -167,7 +165,8 @@ class ProductDetailsFragment : Fragment() {
                     is Resource.Success -> {
                         binding.btnAddCart.revertAnimation()
                         binding.btnAddCart.setBackgroundColor(resources.getColor(R.color.black))
-                        Toast.makeText(requireContext(), "상품이 장바구니에 추가되었습니다.", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(requireContext(), "상품이 장바구니에 추가되었습니다.", Toast.LENGTH_SHORT)
+                            .show()
                     }
 
                     is Resource.Error -> {

@@ -2,6 +2,7 @@ package com.skymilk.shoppingkt.fragments.category
 
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.snackbar.Snackbar
@@ -68,8 +69,8 @@ class FurnitureFragment : BaseCategoryFragment() {
                     }
 
                     is Resource.Error -> {
-                        Snackbar.make(requireView(), it.message.toString(), Snackbar.LENGTH_SHORT).show()
                         hideBestProductsLoading()
+                        Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
                     }
 
                     else -> Unit
