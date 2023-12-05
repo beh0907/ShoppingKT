@@ -1,7 +1,6 @@
 package com.skymilk.shoppingkt.fragments.shopping
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -65,6 +64,7 @@ class BillingFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        initPayment()
         initAddressRecyclerView()
         initBillingProductsRecyclerView()
 
@@ -75,9 +75,23 @@ class BillingFragment : Fragment() {
         binding.txtTotalPrice.text = "${totalPrice.toCommaString()} 원"
     }
 
+    //구매 여부에 따라 뷰 출력이 달라진다
+    private fun initPayment() {
+        val visibility = if (args.payment) View.VISIBLE else View.INVISIBLE
+
+        binding.apply {
+            btnPlaceOrder.visibility = visibility
+            layoutTotalPrice.visibility = visibility
+            middleLine.visibility = visibility
+            bottomLine.visibility = visibility
+        }
+    }
+
     private fun initAddressRecyclerView() {
         addressAdapter.onItemClick = {
             selectedAddress = it
+            val action = BillingFragmentDirections.actionBillingFragmentToAddressFragment(it)
+            findNavController().navigate(action)
         }
 
 
@@ -91,7 +105,6 @@ class BillingFragment : Fragment() {
 
     private fun initBillingProductsRecyclerView() {
         billingProductsAdapter.onItemClick = {
-
         }
 
         billingProductsAdapter.differ.submitList(products)
@@ -113,7 +126,7 @@ class BillingFragment : Fragment() {
                 }
 
                 val order = Order(
-                    OrderStatus.Ordered,
+                    OrderStatus.Ordered.status,
                     totalPrice,
                     products,
                     selectedAddress!!
@@ -123,6 +136,10 @@ class BillingFragment : Fragment() {
 
             imgAddAddress.setOnClickListener {
                 findNavController().navigate(R.id.action_billingFragment_to_addressFragment)
+            }
+
+            imgClose.setOnClickListener {
+                findNavController().navigateUp()
             }
         }
     }

@@ -13,7 +13,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class LoginViewModel @Inject constructor(
-    private val firebaseAuth: FirebaseAuth
+    private val auth: FirebaseAuth
 ) : ViewModel() {
     private val _login = MutableSharedFlow<Resource<FirebaseUser>>()
     val login = _login.asSharedFlow()
@@ -28,7 +28,7 @@ class LoginViewModel @Inject constructor(
         viewModelScope.launch { _login.emit(Resource.Loading()) }
 
         //파이어베이스 인증 로그인
-        firebaseAuth.signInWithEmailAndPassword(email, password)
+        auth.signInWithEmailAndPassword(email, password)
             .addOnSuccessListener {
                 viewModelScope.launch {
                     it.user?.let {
@@ -47,7 +47,7 @@ class LoginViewModel @Inject constructor(
             _resetPassword.emit(Resource.Loading())
         }
 
-        firebaseAuth.sendPasswordResetEmail(email!!)
+        auth.sendPasswordResetEmail(email!!)
             .addOnSuccessListener {
                 viewModelScope.launch {
                     _resetPassword.emit(Resource.Success(email))

@@ -44,8 +44,8 @@ class IntroductionFragment : Fragment() {
 
     private fun setClick() {
         binding.apply {
-            viewModel.setButtonClick(true)
             btnStart.setOnClickListener {
+                viewModel.setButtonClick(true)
                 findNavController().navigate(R.id.action_introductionFragment_to_accountOptionsFragment)
             }
         }
@@ -55,6 +55,7 @@ class IntroductionFragment : Fragment() {
         lifecycleScope.launch {
             viewModel.navigate.collect {
                 when (it) {
+                    //자동 로그인 처리
                     SHOPPING_ACTIVITY -> {
                         Intent(requireActivity(), ShoppingActivity::class.java).apply {
                             //ShoppingActivity만 남도록 플래그 설정
@@ -63,10 +64,10 @@ class IntroductionFragment : Fragment() {
                         }
                     }
 
+                    //START 버튼을 눌렀을 때
                     ACCOUNT_OPTIONS_FRAGMENT -> {
                         findNavController().navigate(it)
                     }
-
                     else -> Unit
                 }
             }

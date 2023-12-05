@@ -128,6 +128,9 @@ class ProductDetailsFragment : Fragment() {
         binding.viewPagerProductImages.apply {
             adapter = imageSViewPagerAdapter
         }
+
+        binding.viewPagerIndicator.attachTo(binding.viewPagerProductImages)
+
     }
 
     private fun initColorsRecyclerView() {

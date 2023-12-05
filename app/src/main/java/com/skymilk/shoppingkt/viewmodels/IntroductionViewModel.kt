@@ -5,7 +5,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.firebase.auth.FirebaseAuth
 import com.skymilk.shoppingkt.R
-import com.skymilk.shoppingkt.utils.Constants
 import com.skymilk.shoppingkt.utils.Constants.Companion.INTRODUCTION_KEY
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -16,7 +15,7 @@ import javax.inject.Inject
 @HiltViewModel
 class IntroductionViewModel @Inject constructor(
     private val sharedPreferences: SharedPreferences,
-    private val firebaseAuth: FirebaseAuth
+    private val auth: FirebaseAuth
 ) : ViewModel() {
 
     private val _navigate = MutableStateFlow(0)
@@ -28,18 +27,21 @@ class IntroductionViewModel @Inject constructor(
     }
 
     init {
-        val isButtonChecked = sharedPreferences.getBoolean(INTRODUCTION_KEY, false)
-        val user = firebaseAuth.currentUser
+        val user = auth.currentUser
+        val isButtonClicked = sharedPreferences.getBoolean(INTRODUCTION_KEY, false)
 
-        if (user != null)
+        //로그인된 유저 정보가 있다면 액티비티 이동
+        //자동 로그인 처리
+        if (user != null) {
             viewModelScope.launch {
                 _navigate.emit(SHOPPING_ACTIVITY)
             }
-
-        if (isButtonChecked) {
+        } else if (isButtonClicked) {
             viewModelScope.launch {
                 _navigate.emit(ACCOUNT_OPTIONS_FRAGMENT)
             }
+        } else {
+            Unit
         }
     }
 

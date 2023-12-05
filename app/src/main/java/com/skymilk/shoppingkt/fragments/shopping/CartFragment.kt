@@ -1,7 +1,6 @@
 package com.skymilk.shoppingkt.fragments.shopping
 
 import android.os.Bundle
-import android.os.Parcelable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,7 +10,10 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.snackbar.Snackbar
 import com.skymilk.shoppingkt.R
 import com.skymilk.shoppingkt.adapters.CartProductsAdapter
 import com.skymilk.shoppingkt.databinding.FragmentCartBinding
@@ -23,7 +25,6 @@ import com.skymilk.shoppingkt.viewmodels.CartViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
-import java.util.ArrayList
 
 @AndroidEntryPoint
 class CartFragment : Fragment() {
@@ -32,7 +33,7 @@ class CartFragment : Fragment() {
 
     private val cartProductsAdapter: CartProductsAdapter by lazy { CartProductsAdapter() }
 
-    private var totalPrice:Int = 0
+    private var totalPrice: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -83,8 +84,16 @@ class CartFragment : Fragment() {
         binding.apply {
             btnCheckOut.setOnClickListener {
                 //shopping_graph에서 지정한 action과 argument
-                val action = CartFragmentDirections.actionCartFragmentToBillingFragment(totalPrice, cartProductsAdapter.differ.currentList.toTypedArray())
+                val action = CartFragmentDirections.actionCartFragmentToBillingFragment(
+                    totalPrice,
+                    cartProductsAdapter.differ.currentList.toTypedArray(),
+                    true
+                )
                 findNavController().navigate(action)
+            }
+
+            imgClose.setOnClickListener {
+                findNavController().navigateUp()
             }
 
         }

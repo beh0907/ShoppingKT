@@ -8,6 +8,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.navArgs
 import com.skymilk.shoppingkt.databinding.FragmentAddressBinding
 import com.skymilk.shoppingkt.models.Address
 import com.skymilk.shoppingkt.utils.Resource
@@ -21,6 +22,8 @@ class AddressFragment : Fragment() {
 
     private lateinit var binding: FragmentAddressBinding
     private val viewModel: AddressViewModel by viewModels()
+
+    private val args by navArgs<AddressFragmentArgs>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,6 +39,9 @@ class AddressFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        initAddress()
+
         setClick()
         setObserve()
     }
@@ -56,6 +62,24 @@ class AddressFragment : Fragment() {
 
             btnDelete.setOnClickListener {
 
+            }
+        }
+    }
+
+    //목록에서 주소를 선택하면 확인을 위해 정보를 보여준다
+    private fun initAddress() {
+        val address = args.address
+
+        if (address == null) binding.btnDelete.visibility = View.GONE
+        else {
+            binding.apply {
+                editAddressTitle.setText(address.addressTitle)
+                editName.setText(address.name)
+                editAddressMain.setText(address.addressMain)
+                editAddressSub.setText(address.addressSub)
+                editPhone.setText(address.phone)
+                
+                btnSave.text = "확인"
             }
         }
     }
