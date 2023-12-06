@@ -76,6 +76,7 @@ class UserAccountViewModel @Inject constructor(
 
     //선택된 이미지가 없을 때
     private fun saveUserInfo(user: User, shouldOldImage: Boolean) {
+        //복수의 읽고 쓰는 작업을 수행하는 runTransaction
         fireStore.runTransaction {
             val documentRef = fireStore.collection("user").document(auth.uid!!)
 

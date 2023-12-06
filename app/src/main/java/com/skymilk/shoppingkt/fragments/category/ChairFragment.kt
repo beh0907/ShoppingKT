@@ -20,8 +20,6 @@ class ChairFragment : BaseCategoryFragment() {
     @Inject
     lateinit var fireStore: FirebaseFirestore
 
-    private lateinit var binding: FragmentBaseCategoryBinding
-
     private val viewModel: BaseCategoryViewModel by viewModels {
         BaseCategoryViewModelFactory(fireStore, Category.Chair)
     }
@@ -46,7 +44,8 @@ class ChairFragment : BaseCategoryFragment() {
                     }
 
                     is Resource.Error -> {
-                        Snackbar.make(requireView(), it.message.toString(), Snackbar.LENGTH_SHORT).show()
+                        Snackbar.make(requireView(), it.message.toString(), Snackbar.LENGTH_SHORT)
+                            .show()
                         hideOfferLoading()
                     }
 
@@ -68,7 +67,8 @@ class ChairFragment : BaseCategoryFragment() {
                     }
 
                     is Resource.Error -> {
-                        Snackbar.make(requireView(), it.message.toString(), Snackbar.LENGTH_SHORT).show()
+                        Snackbar.make(requireView(), it.message.toString(), Snackbar.LENGTH_SHORT)
+                            .show()
                         hideBestProductsLoading()
                     }
 

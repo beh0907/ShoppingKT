@@ -33,7 +33,9 @@ class BaseCategoryViewModel constructor(
 
         println("category : $category")
 
-        fireStore.collection("Products").whereEqualTo("category", category.category)
+        fireStore.collection("Products")
+            .limit(20)
+            .whereEqualTo("category", category.category)
             .whereNotEqualTo("offerPercentage", null).get()//offerPercentage의 값이 있는 상품만
             .addOnSuccessListener {
 

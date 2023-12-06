@@ -7,7 +7,6 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.firestore.FirebaseFirestore
-import com.skymilk.shoppingkt.databinding.FragmentBaseCategoryBinding
 import com.skymilk.shoppingkt.models.Category
 import com.skymilk.shoppingkt.utils.Resource
 import com.skymilk.shoppingkt.viewmodels.BaseCategoryViewModel
@@ -20,8 +19,6 @@ import javax.inject.Inject
 class FurnitureFragment : BaseCategoryFragment() {
     @Inject
     lateinit var fireStore: FirebaseFirestore
-
-    private lateinit var binding: FragmentBaseCategoryBinding
 
     private val viewModel: BaseCategoryViewModel by viewModels {
         BaseCategoryViewModelFactory(fireStore, Category.Furniture)
@@ -47,7 +44,8 @@ class FurnitureFragment : BaseCategoryFragment() {
                     }
 
                     is Resource.Error -> {
-                        Snackbar.make(requireView(), it.message.toString(), Snackbar.LENGTH_SHORT).show()
+                        Snackbar.make(requireView(), it.message.toString(), Snackbar.LENGTH_SHORT)
+                            .show()
                         hideOfferLoading()
                     }
 

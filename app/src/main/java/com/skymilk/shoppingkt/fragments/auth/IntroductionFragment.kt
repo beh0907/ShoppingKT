@@ -68,6 +68,7 @@ class IntroductionFragment : Fragment() {
                     ACCOUNT_OPTIONS_FRAGMENT -> {
                         findNavController().navigate(it)
                     }
+
                     else -> Unit
                 }
             }

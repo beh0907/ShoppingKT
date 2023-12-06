@@ -3,6 +3,7 @@ package com.skymilk.shoppingkt.viewmodels
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.firebase.firestore.FirebaseFirestore
+import com.skymilk.shoppingkt.models.PagingInfo
 import com.skymilk.shoppingkt.models.Product
 import com.skymilk.shoppingkt.utils.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -35,79 +36,62 @@ class MainCategoryViewModel @Inject constructor(
 
     //파이어스토어에서 스페셜 상품 목록을 가져온다
     fun getSpecialProducts() {
-        viewModelScope.launch {
-            _specialProducts.emit(Resource.Loading())
-        }
+        viewModelScope.launch { _specialProducts.emit(Resource.Loading()) }
 
         fireStore.collection("Products").whereEqualTo("category", "Special Products")
-            .get().addOnSuccessListener { result ->
+            .get().addOnSuccessListener {
+                val result = it.toObjects(Product::class.java)
 
-                val resultList = result.toObjects(Product::class.java)
-
-                viewModelScope.launch {
-                    _specialProducts.emit(Resource.Success(resultList))
-                }
+                viewModelScope.launch { _specialProducts.emit(Resource.Success(result)) }
             }.addOnFailureListener { error ->
-                viewModelScope.launch {
-                    _specialProducts.emit(Resource.Error(error.message))
-                }
+                viewModelScope.launch { _specialProducts.emit(Resource.Error(error.message)) }
             }
     }
 
     //파이어스토어에서 핫딜 상품 목록을 가져온다
     fun getBestDeals() {
-        viewModelScope.launch {
-            _bestDeals.emit(Resource.Loading())
-        }
+        viewModelScope.launch { _bestDeals.emit(Resource.Loading()) }
 
         fireStore.collection("Products").whereEqualTo("category", "Best Deals")
-            .get().addOnSuccessListener { result ->
+            .get().addOnSuccessListener {
 
-                val resultList = result.toObjects(Product::class.java)
+                val result = it.toObjects(Product::class.java)
 
-                viewModelScope.launch {
-                    _bestDeals.emit(Resource.Success(resultList))
-                }
+                viewModelScope.launch { _bestDeals.emit(Resource.Success(result)) }
             }.addOnFailureListener { error ->
-                viewModelScope.launch {
-                    _bestDeals.emit(Resource.Error(error.message))
-                }
+                viewModelScope.launch { _bestDeals.emit(Resource.Error(error.message)) }
             }
     }
 
     //파이어스토어에서 베스트 상품 목록을 가져온다
     fun getBestProducts() {
-        //페이징이 완료되었다면 이후 작업을 수행하지 않는다
         if (pagingInfo.isPagingEnd) return
 
-        viewModelScope.launch {
-            _bestProducts.emit(Resource.Loading())
-        }
+        viewModelScope.launch { _bestProducts.emit(Resource.Loading()) }
 
-        fireStore.collection("Products").limit(pagingInfo.amount * pagingInfo.amount)
-            .get().addOnSuccessListener { result ->
+        val ref = fireStore.collection("Products")
+        val query = if (pagingInfo.lastSnapshot != null)
+            ref.orderBy("name").startAfter(pagingInfo.lastSnapshot).limit(pagingInfo.amount)
+        else
+            ref.orderBy("name").limit(pagingInfo.amount)
 
-                val resultList = result.toObjects(Product::class.java)
+        query
+            .get()
+            .addOnSuccessListener {
+                if (!it.isEmpty)
+                    pagingInfo.lastSnapshot = it.last() // 가져온 데이터가 있다면 마지막 스냅샷을 저장하여 페이징처리에 활용한다
 
-                //이전 목록과 새로 가져온 목록의 정보가 같다면 완료 되었음을 확인한다
-                pagingInfo.isPagingEnd = pagingInfo.oldList == resultList
-                pagingInfo.oldList = resultList
+                if (it.size() != pagingInfo.amount.toInt() || it.isEmpty)
+                    pagingInfo.isPagingEnd = true // 가져온 데이터가 없거나 페이지 당 개수보다 적다면 끝낸다
 
-                viewModelScope.launch {
-                    _bestProducts.emit(Resource.Success(resultList))
-                }
-            }.addOnFailureListener { error ->
-                viewModelScope.launch {
-                    _bestProducts.emit(Resource.Error(error.message))
-                }
+                val result = it.toObjects(Product::class.java)
+                println("result : $result")
+
+                viewModelScope.launch { _bestProducts.emit(Resource.Success(result)) }
+            }.addOnFailureListener {
+                println("error : ${it.message}")
+                viewModelScope.launch { _bestProducts.emit(Resource.Error(it.message)) }
             }
     }
 }
 
-//리스트 페이징 처리를 위한 페이징 클래스
-internal data class PagingInfo(
-    var page: Long = 1, //페이지 정보
-    var amount: Long = 10, //페이지 당 데이터 수
-    var oldList: List<Product> = emptyList(),
-    var isPagingEnd: Boolean = false
-)

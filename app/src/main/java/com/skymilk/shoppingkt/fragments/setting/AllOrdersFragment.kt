@@ -12,7 +12,6 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.skymilk.shoppingkt.adapters.AllOrdersAdapter
 import com.skymilk.shoppingkt.databinding.FragmentAllOrdersBinding
-import com.skymilk.shoppingkt.fragments.shopping.CartFragmentDirections
 import com.skymilk.shoppingkt.utils.Resource
 import com.skymilk.shoppingkt.viewmodels.AllOrdersViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -50,7 +49,8 @@ class AllOrdersFragment : Fragment() {
     private fun initOrdersRecyclerView() {
         allOrdersAdapter.onItemClick = {
             //shopping_graph에서 지정한 action과 argument
-            val action = AllOrdersFragmentDirections.actionAllOrdersFragmentToOrderDetailFragment(it)
+            val action =
+                AllOrdersFragmentDirections.actionAllOrdersFragmentToOrderDetailFragment(it)
             findNavController().navigate(action)
         }
 

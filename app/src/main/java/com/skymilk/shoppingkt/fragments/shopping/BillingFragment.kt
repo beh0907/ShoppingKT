@@ -171,7 +171,7 @@ class BillingFragment : Fragment() {
     private fun setOrderObserve() {
         lifecycleScope.launch {
             orderViewModel.order.collectLatest {
-                when(it) {
+                when (it) {
                     is Resource.Loading -> {
                         binding.btnPlaceOrder.startAnimation()
                     }

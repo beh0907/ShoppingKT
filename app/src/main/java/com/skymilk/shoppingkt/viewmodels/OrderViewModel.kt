@@ -25,6 +25,7 @@ class OrderViewModel @Inject constructor(
     fun placeOrder(order: Order) {
         viewModelScope.launch { _order.emit(Resource.Loading()) }
 
+        //복수의 쓰기 작업을 일괄로 수행하기 위한 runBatch
         //주문을 위한 동시 처리를 위해 배치 설정
         fireStore.runBatch { batch ->
             //사용자 개인의 주문 목록 DB 저장

@@ -7,7 +7,7 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.skymilk.shoppingkt.R
 
-fun Fragment.setUpBottomSheetDialog(
+fun Fragment.setUpResetPassword(
     onSendClick: (String) -> Unit
 ) {
     val dialog = BottomSheetDialog(requireContext(), R.style.DialogStyle)

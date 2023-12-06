@@ -8,6 +8,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.skymilk.shoppingkt.databinding.FragmentAddressBinding
 import com.skymilk.shoppingkt.models.Address
@@ -61,7 +62,14 @@ class AddressFragment : Fragment() {
             }
 
             btnDelete.setOnClickListener {
-
+                val address = Address(
+                    editAddressTitle.text.toString(),
+                    editName.text.toString(),
+                    editAddressMain.text.toString(),
+                    editAddressSub.text.toString(),
+                    editPhone.text.toString(),
+                )
+                viewModel.deleteAddress(address)
             }
         }
     }
@@ -78,7 +86,7 @@ class AddressFragment : Fragment() {
                 editAddressMain.setText(address.addressMain)
                 editAddressSub.setText(address.addressSub)
                 editPhone.setText(address.phone)
-                
+
                 btnSave.text = "확인"
             }
         }
@@ -93,8 +101,8 @@ class AddressFragment : Fragment() {
                     }
 
                     is Resource.Success -> {
-
                         binding.progressBar.visibility = View.INVISIBLE
+                        findNavController().navigateUp()
 
                     }
 
@@ -105,12 +113,6 @@ class AddressFragment : Fragment() {
 
                     else -> Unit
                 }
-            }
-        }
-
-        lifecycleScope.launch {
-            viewModel.error.collectLatest {
-                Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
             }
         }
     }

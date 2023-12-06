@@ -153,13 +153,13 @@ class MainCategoryFragment : Fragment() {
             //collectLatest는 갱신이 처리보다 빠를 경우 마지막 처리만 반영한다
             viewModel.bestProducts.collectLatest {
                 when (it) {
+                    is Resource.Loading -> {
+                        binding.progressBarBestProducts.visibility = View.VISIBLE
+                    }
+
                     is Resource.Success -> {
                         bestProductsAdapter.differ.submitList(it.data)
                         binding.progressBarBestProducts.visibility = View.GONE
-                    }
-
-                    is Resource.Loading -> {
-                        binding.progressBarBestProducts.visibility = View.VISIBLE
                     }
 
                     is Resource.Error -> {

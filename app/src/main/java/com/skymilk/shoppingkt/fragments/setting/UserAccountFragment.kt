@@ -18,7 +18,6 @@ import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.google.android.material.snackbar.Snackbar
 import com.skymilk.shoppingkt.databinding.FragmentUserAccountBinding
-import com.skymilk.shoppingkt.dialogs.setUpBottomSheetDialog
 import com.skymilk.shoppingkt.models.User
 import com.skymilk.shoppingkt.utils.Resource
 import com.skymilk.shoppingkt.viewmodels.LoginViewModel
@@ -39,16 +38,18 @@ class UserAccountFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        imageActivityResultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-            val data = it.data?.data
-            if (data == null) {
-                Toast.makeText(requireContext(), "이미지가 선택되지 않았습니다.", Toast.LENGTH_SHORT).show()
-                return@registerForActivityResult
-            }
+        imageActivityResultLauncher =
+            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+                val data = it.data?.data
+                if (data == null) {
+                    Toast.makeText(requireContext(), "이미지가 선택되지 않았습니다.", Toast.LENGTH_SHORT).show()
+                    return@registerForActivityResult
+                }
 
-            imageUri = data
-            Glide.with(this).load(imageUri).error(ColorDrawable(Color.BLACK)).into(binding.imgUser)
-        }
+                imageUri = data
+                Glide.with(this).load(imageUri).error(ColorDrawable(Color.BLACK))
+                    .into(binding.imgUser)
+            }
     }
 
     override fun onCreateView(
@@ -145,11 +146,13 @@ class UserAccountFragment : Fragment() {
             loginViewModel.reset.collectLatest {
                 when (it) {
                     is Resource.Success -> {
-                        Snackbar.make(requireView(), "비밀번호 초기화 링크를 전송했습니다.", Snackbar.LENGTH_SHORT).show()
+                        Snackbar.make(requireView(), "비밀번호 초기화 링크를 전송했습니다.", Snackbar.LENGTH_SHORT)
+                            .show()
                     }
 
                     is Resource.Error -> {
-                        Snackbar.make(requireView(), "Error : ${it.message}", Snackbar.LENGTH_SHORT).show()
+                        Snackbar.make(requireView(), "Error : ${it.message}", Snackbar.LENGTH_SHORT)
+                            .show()
                     }
 
                     else -> Unit
@@ -160,7 +163,8 @@ class UserAccountFragment : Fragment() {
 
     private fun setUserInfo(user: User) {
         binding.apply {
-            Glide.with(this@UserAccountFragment).load(user.imagePath).error(ColorDrawable(Color.BLACK)).into(imgUser)
+            Glide.with(this@UserAccountFragment).load(user.imagePath)
+                .error(ColorDrawable(Color.BLACK)).into(imgUser)
 
             editName.setText(user.name)
             editEmail.setText(user.email)

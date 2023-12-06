@@ -72,6 +72,39 @@ class CartFragment : Fragment() {
             viewModel.changeQuantity(it, FirebaseCommon.QuantityChangeState.DECREASE)
         }
 
+        //아이템 터치 이벤트 동작
+        val itemTouchHelper = object : ItemTouchHelper.SimpleCallback(
+            ItemTouchHelper.UP or ItemTouchHelper.DOWN, //드래그 방향
+            ItemTouchHelper.LEFT // 스와이프 방향
+        ) {
+            override fun onMove(
+                recyclerView: RecyclerView,
+                viewHolder: RecyclerView.ViewHolder,
+                target: RecyclerView.ViewHolder
+            ) = true
+
+            //즐겨찾기 목록 아이템을 스와이프시 삭제한다
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                println("direction : $direction")
+
+                val position = viewHolder.adapterPosition
+                val cartProduct = cartProductsAdapter.differ.currentList[position]
+
+                //장바구니에 물건을 삭제한다
+                viewModel.deleteCartProducts(cartProduct)
+
+                Snackbar.make(requireView(), "삭제되었습니다", Snackbar.LENGTH_LONG).setAction(
+                    "취소",
+                    View.OnClickListener {
+                        //취소할 경우 삭제했던 음식 정보를 다시 추가한다.
+                        viewModel.addProduct(cartProduct)
+                    }
+                ).show()
+            }
+        }
+        //생성한 이벤트를 리사이클러뷰에 적용
+        ItemTouchHelper(itemTouchHelper).attachToRecyclerView(binding.recyclerCartProduct)
+
         binding.recyclerCartProduct.apply {
             layoutManager =
                 LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)

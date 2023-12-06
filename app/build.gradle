@@ -51,7 +51,9 @@ dependencies {
 
     apply plugin :"kotlin-kapt"
 
+    //Android Ktx
     //네비게이션
+    implementation "androidx.fragment:fragment-ktx:1.6.2"
     implementation 'androidx.navigation:navigation-fragment-ktx:2.7.5'
     implementation 'androidx.navigation:navigation-ui-ktx:2.7.5'
 
@@ -79,12 +81,12 @@ dependencies {
     //로딩 버튼
     implementation "com.github.leandroborgesferreira:loading-button-android:2.3.0"
 
-    //Android Ktx
-    implementation "androidx.fragment:fragment-ktx:1.6.2"
-
     //Dagger hilt
     implementation("com.google.dagger:hilt-android:2.48.1")
     kapt("com.google.dagger:hilt-android-compiler:2.48.1")
+
+    //권한 요청
+    implementation 'io.github.ParkSangGwon:tedpermission-coroutine:3.3.0'
 
     //파이어베이스
     implementation 'com.google.firebase:firebase-auth:22.3.0'

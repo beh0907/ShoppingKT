@@ -78,6 +78,12 @@ class CartViewModel @Inject constructor(
         }
     }
 
+    //장바구니에 상품 추가
+    fun addProduct(cartProduct: CartProduct) {
+        firebaseCommon.addProductCart(cartProduct) { addedCartProduct, exception ->
+        }
+    }
+
     fun changeQuantity(cartProduct: CartProduct, state: FirebaseCommon.QuantityChangeState) {
         val index = cartProducts.value.data?.indexOf(cartProduct)
 
