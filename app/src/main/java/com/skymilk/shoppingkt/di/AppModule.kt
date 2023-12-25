@@ -2,6 +2,7 @@ package com.skymilk.shoppingkt.di
 
 import android.app.Application
 import android.content.Context.MODE_PRIVATE
+import android.content.SharedPreferences
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
@@ -34,7 +35,7 @@ object AppModule {
     @Provides
     fun provideIntroductionSharedPreferences(
         application: Application
-    ) = application.getSharedPreferences(Constants.INTRODUCTION_SHARED_PREFERENCES, MODE_PRIVATE)
+    ): SharedPreferences = application.getSharedPreferences(Constants.INTRODUCTION_SHARED_PREFERENCES, MODE_PRIVATE)
 
     @Provides
     @Singleton

@@ -5,6 +5,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
+import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.skymilk.shoppingkt.R
@@ -28,7 +29,17 @@ class ShoppingActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         val navController = findNavController(R.id.fragmentShoppingHost)
-        binding.bottomNavigation.setupWithNavController(navController)
+
+        //asd
+        binding.bottomNavigation.apply {
+            setupWithNavController(navController)
+            setOnItemSelectedListener { item ->
+                NavigationUI.onNavDestinationSelected(item, navController)
+                navController.popBackStack(item.itemId, inclusive = false)
+                true
+            }
+        }
+
 
         setObserve()
     }

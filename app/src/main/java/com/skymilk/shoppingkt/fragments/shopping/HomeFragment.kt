@@ -1,13 +1,17 @@
 package com.skymilk.shoppingkt.fragments.shopping
 
 import android.Manifest
+import android.app.Activity.RESULT_OK
+import android.content.Intent
 import android.os.Bundle
+import android.speech.RecognizerIntent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.tabs.TabLayoutMediator
@@ -21,15 +25,11 @@ import com.skymilk.shoppingkt.fragments.category.CupboardFragment
 import com.skymilk.shoppingkt.fragments.category.FurnitureFragment
 import com.skymilk.shoppingkt.fragments.category.MainCategoryFragment
 import com.skymilk.shoppingkt.fragments.category.TableFragment
-import com.skymilk.shoppingkt.utils.Resource
-import com.skymilk.shoppingkt.viewmodels.HomeViewModel
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import java.util.Locale
 
 class HomeFragment : Fragment() {
     private lateinit var binding: FragmentHomeBinding
-    private val viewModel: HomeViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,7 +49,6 @@ class HomeFragment : Fragment() {
         initViewPager()
 
         setClick()
-        setObserve()
     }
 
     private fun initViewPager() {
@@ -87,54 +86,56 @@ class HomeFragment : Fragment() {
             }
 
             imgAudio.setOnClickListener {
-                lifecycleScope.launch(Dispatchers.Main) {
+                lifecycleScope.launch {
+                    //권한 체크
                     val isGranted = requestAudioPermission()
 
+                    //권한 미 획득 시 종료
                     if (!isGranted) {
                         Toast.makeText(requireContext(), "오디오 권한을 허용해주세요.", Toast.LENGTH_SHORT)
                             .show()
                         return@launch
                     }
 
-                    viewModel.startSTT()
+                    //stt 시작
+                    startStt()
                 }
             }
         }
     }
 
-    private fun setObserve() {
-        lifecycleScope.launch {
-            viewModel.speechText.collectLatest {
-                when (it) {
-                    is Resource.Loading -> {
-                        Toast.makeText(requireContext(), "음성 인식이 시작되었습니다.", Toast.LENGTH_SHORT)
-                            .show()
-                    }
-
-                    is Resource.Success -> {
-                        viewModel.stopStt()
-
-                        val text = it.data
-
-                        if (text.isNullOrEmpty()) {
-                            Toast.makeText(requireContext(), "인식된 음성이 없습니다.", Toast.LENGTH_SHORT)
-                                .show()
-                            return@collectLatest
-                        }
-
-                        val action = HomeFragmentDirections.actionHomeFragmentToSearchFragment(text)
-                        findNavController().navigate(action)
-                    }
-
-                    is Resource.Error -> {
-                        viewModel.stopStt()
-                        Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
-                    }
-
-                    else -> Unit
-                }
-            }
+    //stt 시작
+    private fun startStt() {
+        val intent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH)
+        intent.apply {
+            putExtra(
+                RecognizerIntent.EXTRA_LANGUAGE_MODEL,
+                RecognizerIntent.LANGUAGE_MODEL_FREE_FORM
+            )
+            putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.getDefault())
+            putExtra(RecognizerIntent.EXTRA_PROMPT, "검색어를 말해주세요.")
         }
+
+        activityResult.launch(intent)
+    }
+
+
+    //STT 결과 정보 콜백
+    private val activityResult: ActivityResultLauncher<Intent> = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult()
+    ) {
+
+        if (it.resultCode != RESULT_OK) {
+            Toast.makeText(requireContext(), "인식된 음성이 없습니다.", Toast.LENGTH_SHORT)
+                .show()
+            return@registerForActivityResult
+        }
+
+        val res: ArrayList<String> =
+            it.data?.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS) as ArrayList<String>
+
+        val action = HomeFragmentDirections.actionHomeFragmentToSearchFragment(res[0])
+        findNavController().navigate(action)
     }
 
     //오디오 권한 요청

@@ -5,6 +5,7 @@ class Constants {
         val USER_COLLECTION = "user"
 
         val INTRODUCTION_SHARED_PREFERENCES = "introductionSharedPreferences"
+
         val INTRODUCTION_KEY = "introductionKey"
     }
 }
