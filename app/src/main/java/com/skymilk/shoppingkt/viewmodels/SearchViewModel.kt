@@ -25,12 +25,12 @@ class SearchViewModel @Inject constructor(
         viewModelScope.launch { _search.emit(Resource.Loading()) }
 
         fireStore.collection("Products")
-            .where(
-                Filter.or(
-                    Filter.arrayContains("name", keyword),// 상품명 키워드 체크
-                    Filter.arrayContains("description", keyword), // 상품 설명 키워드 체크
-                )
-            )
+//            .where(
+//                Filter.or(
+//                    Filter.arrayContains("name", keyword),// 상품명 키워드 체크
+//                    Filter.arrayContains("description", keyword), // 상품 설명 키워드 체크
+//                )
+//            )
             .orderBy("name")
             .get()
             .addOnSuccessListener {

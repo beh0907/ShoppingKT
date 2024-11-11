@@ -14,8 +14,7 @@ import com.skymilk.shoppingkt.helper.toCommaString
 import com.skymilk.shoppingkt.models.CartProduct
 import java.text.DecimalFormat
 
-class CartProductsAdapter :
-    RecyclerView.Adapter<CartProductsAdapter.CartProductsViewHolder>() {
+class CartProductsAdapter : RecyclerView.Adapter<CartProductsAdapter.CartProductsViewHolder>() {
 
     private val diffCallback = object : DiffUtil.ItemCallback<CartProduct>() {
         override fun areItemsTheSame(oldItem: CartProduct, newItem: CartProduct): Boolean {
@@ -78,6 +77,7 @@ class CartProductsAdapter :
                         cartProduct.selectedColor ?: Color.TRANSPARENT
                     )
                 )
+
                 txtSize.text = cartProduct.selectedSize ?: "".also {
                     imgSize.setImageDrawable(
                         ColorDrawable(Color.TRANSPARENT)

@@ -92,12 +92,11 @@ class MainCategoryFragment : Fragment() {
     }
 
     private fun setScroll() {
-        binding.scrollViewMain.setOnScrollChangeListener(NestedScrollView.OnScrollChangeListener { scrollView, _, scrollY, _, _ ->
-            if (scrollView.getChildAt(0).bottom <= scrollView.height + scrollY) {
-                viewModel.getBestProducts()
-            }
-
-        })
+//        binding.scrollViewMain.setOnScrollChangeListener(NestedScrollView.OnScrollChangeListener { scrollView, _, scrollY, _, _ ->
+//            if (scrollView.getChildAt(0).bottom <= scrollView.height + scrollY) {
+//                viewModel.getBestProducts()
+//            }
+//        })
     }
 
     private fun setObserve() {

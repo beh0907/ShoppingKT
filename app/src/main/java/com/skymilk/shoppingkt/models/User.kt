@@ -6,5 +6,4 @@ data class User(
     var imagePath: String = "" // 이미지는 없을 수도 있다
 ) {
     constructor() : this("", "", "")
-
 }

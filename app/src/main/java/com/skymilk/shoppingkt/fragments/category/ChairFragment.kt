@@ -6,7 +6,6 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.firestore.FirebaseFirestore
-import com.skymilk.shoppingkt.databinding.FragmentBaseCategoryBinding
 import com.skymilk.shoppingkt.models.Category
 import com.skymilk.shoppingkt.utils.Resource
 import com.skymilk.shoppingkt.viewmodels.BaseCategoryViewModel

@@ -47,7 +47,7 @@ class LoginViewModel @Inject constructor(
             _resetPassword.emit(Resource.Loading())
         }
 
-        auth.sendPasswordResetEmail(email!!)
+        auth.sendPasswordResetEmail(email)
             .addOnSuccessListener {
                 viewModelScope.launch {
                     _resetPassword.emit(Resource.Success(email))

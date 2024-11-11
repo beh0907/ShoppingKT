@@ -62,11 +62,13 @@ class CartViewModel @Inject constructor(
                     viewModelScope.launch { _cartProducts.emit(Resource.Error(error?.message.toString())) }
                 } else {
                     cartProductDocuments = value.documents
+
                     val cartProducts = value.toObjects(CartProduct::class.java)
                     viewModelScope.launch { _cartProducts.emit(Resource.Success(cartProducts)) }
                 }
             }
     }
+
 
     fun deleteCartProducts(cartProduct: CartProduct) {
         val index = cartProducts.value.data?.indexOf(cartProduct)
