@@ -1,5 +1,5 @@
 # <div align=center>Shopping</div>
-[Firebase](https://firebase.google.com/)를 활용한 kotlin 언어 기반의 쇼핑 안드로이드 어플리케이션입니다.
+[Firebase](https://firebase.google.com/)를 활용한 kotlin 언어 기반의 가구 쇼핑 안드로이드 어플리케이션입니다.
 
 # 특징
 * 기본 로그인과 Google,FaceBook 소셜 로그인 지원
